@@ -153,10 +153,10 @@ form(name='caseDetails')
                 td
                   div {{CaseService.case.last_modified_date | date:'medium'}}
                   div {{CaseService.case.last_modified_by}}
-              tr(ng-hide='compact')
+              tr(ng-hide='compact',ng-if="securityService.loginStatus.isInternal")
                 th.rha-detail-table-header {{'Account Number:'|translate}}
                 td {{CaseService.case.account_number}}
-              tr(ng-hide='compact')
+              tr(ng-hide='compact',ng-if="securityService.loginStatus.isInternal")
                 th.rha-detail-table-header {{'Account Name:'|translate}}
                 td {{CaseService.account.name}}
         div.row(style='padding-top: 10px;')
