@@ -104,6 +104,15 @@ angular.module('RedhatAccess.cases').controller('DetailsSection', [
                 AlertService.addStrataErrorMessage(error);
             });
         };
+        $scope.changeCaseOwner = function () {
+            $scope.updatingDetails = true;
+            strataService.cases.owner.update(CaseService.kase.case_number,CaseService.kase.owner).then(function () {
+                $scope.updatingDetails = false;
+            }, function (error) {
+                $scope.updatingDetails = false;
+                AlertService.addStrataErrorMessage(error);
+            });
+        };
         if (CaseService.caseDataReady) {
             $scope.init();
         }
