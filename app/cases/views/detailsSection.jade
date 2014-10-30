@@ -131,9 +131,13 @@ form(name='caseDetails')
                 td#rha-owner {{CaseService.kase.contact_name}} <{{CaseService.kase.contact_sso_username }}>
               tr(ng-hide='compact')
                 th.rha-detail-table-header
-                  label(for='rha-rh-owner') {{'Red Hat Owner:'|translate}}
+                  div(style='vertical-align: 50%; display: inline-block;')
+                    label(for='rha-rh-owner') {{'Red Hat Owner:'|translate}}                  
                 td
                   div
+                    span.glyphicon.glyphicon-asterisk(
+                    ng-show='caseDetails.owner.$dirty',
+                    style='display: inline-block;float: left; vertical-align: 50%;')
                     span#rha-rh-owner(ng-if='userIsCaseOwner') {{CaseService.kase.owner}}
                     select#rha-rh-owner.form-control(
                       name='owner',
