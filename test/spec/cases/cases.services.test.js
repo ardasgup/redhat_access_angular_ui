@@ -245,7 +245,7 @@ describe('Case Services', function () {
             securityService.loginStatus.isLoggedIn = true;
             var filterParams = {
                     include_closed: true,
-                    count: 100,
+                    count: 10,
                     start: 0
                 };
             mockStrataService.rejectCalls();

@@ -345,10 +345,8 @@ angular.module('RedhatAccess.common').factory('strataService', [
                 users: function (accountNumber, group) {
                     var deferred = $q.defer();
                     if (!ie8 && strataCache.get('users' + accountNumber + group)) {
-                        console.log('data present in strata cache !');
                         deferred.resolve(strataCache.get('users' + accountNumber + group));
                     } else {
-                        console.log('data not present in strata cache !!');
                         strata.accounts.users(accountNumber, function (response) {
                             if (!ie8) {
                                 strataCache.put('users' + accountNumber + group, response);
@@ -505,18 +503,11 @@ angular.module('RedhatAccess.common').factory('strataService', [
                         params = {};
                     }
                     if (RHAUtils.isEmpty(params.count)) {
-                        params.count = 50;
+                        params.count = 10;
                     }
-                    if (!ie8 && strataCache.get('filter' + JSON.stringify(params))) {
-                        deferred.resolve(strataCache.get('filter' + JSON.stringify(params)));
-                    } else {
-                        strata.cases.filter(params, function (response) {
-                            if (!ie8) {
-                                strataCache.put('filter' + JSON.stringify(params), response);
-                            }
-                            deferred.resolve(response);
-                        }, angular.bind(deferred, errorHandler));
-                    }
+                    strata.cases.filter(params, function (response) {
+                        deferred.resolve(response);
+                    }, angular.bind(deferred, errorHandler));
                     return deferred.promise;
                 },
                 post: function (caseJSON) {

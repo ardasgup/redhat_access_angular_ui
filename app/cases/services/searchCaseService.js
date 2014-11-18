@@ -19,7 +19,7 @@ angular.module('RedhatAccess.cases').service('SearchCaseService', [
         this.prefilter = {};
         this.postfilter = {};
         this.start = 0;
-        this.count = 100;
+        this.count = 10;
         this.total = 0;
         this.allCasesDownloaded = false;
         var getIncludeClosed = function () {
@@ -120,10 +120,8 @@ angular.module('RedhatAccess.cases').service('SearchCaseService', [
                                 that.allCasesDownloaded = true;
                             }
                             if (response['case'] !== undefined){
-                                that.cases = that.cases.concat(response['case']);
-                                //that.count = response['case'].length + that.total
-                                that.start = that.start + that.count;
-                                that.total = that.total + response['case'].length;
+                                that.cases = response['case'];
+                                that.total = response['case'].length;
                             }
                             if (angular.isFunction(that.postFilter)) {
                                 that.postFilter();
@@ -143,10 +141,9 @@ angular.module('RedhatAccess.cases').service('SearchCaseService', [
                         cases = strataService.cases.filter(params).then(angular.bind(that, function (response) {
                             that.totalCases = response.total_count;
                             
-                            that.cases = that.cases.concat(response['case']);
+                            that.cases = response['case'];
                             that.searching = false;
-                            that.start = that.start + that.count;
-                            that.total = that.total + response['case'].length;
+                            that.total = response['case'].length;
                             if (that.total >= that.totalCases) {
                                 that.allCasesDownloaded = true;
                             }
@@ -162,6 +159,7 @@ angular.module('RedhatAccess.cases').service('SearchCaseService', [
                 }
                 promises.push(deferred.promise);
             } else {
+                this.searching = false;
                 deferred.resolve();
                 promises.push(deferred.promise);
             }
