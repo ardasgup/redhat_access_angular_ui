@@ -211,6 +211,22 @@ angular.module('RedhatAccess.security').factory('securityService', [
                     ];
                 }
                 return $modal.open(tempModalDefaults).result;
+            },
+            sfdcIsHealthy: true,
+            checkSfdcHealth: function() {
+                var deferred = $q.defer();
+                strataService.health.sfdc().then(angular.bind(this, function (response) {
+                    if (response.name === 'SFDC' && response.status === true) {
+                        service.sfdcIsHealthy = true;
+                    } else {
+                        service.sfdcIsHealthy = false;
+                    }
+                    deferred.resolve(response);
+                }), angular.bind(this, function (error) {
+                    AlertService.addStrataErrorMessage(error);
+                    deferred.reject();
+                }));
+                return deferred.promise;
             }
         };
         return service;
