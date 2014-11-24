@@ -9,6 +9,8 @@ angular.module('RedhatAccess.common', [
 }).constant('RESOURCE_TYPES', {
 	article: 'Article',
 	solution: 'Solution'
+}).value('COMMON_CONFIG', {
+    'sfdcOutageMessage': '<ul class="message"><li class="alertSystem">Creating and updating support cases online is currently disabled. Please <a target="_blank" href="https://access.redhat.com/support/contact/technicalSupport/">contact Red Hat support</a> if you need immediate assistance.</li></ul>'
 }).factory('configurationService', [
 	'$q',
 	function($q) {

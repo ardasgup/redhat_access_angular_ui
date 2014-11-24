@@ -11,6 +11,7 @@
     </div>
     <div class="rha-bottom-border" style='margin-bottom: 0px;'/>
     <div class="row" style='margin-bottom: 0px;'>
+        <div ng-controller='SecurityController' ng-show='!securityService.sfdcIsHealthy' ng-bind-html='parseSfdcOutageHtml()'></div>
         <div class="col-xs-12">
             <div rha-alert />
         </div>

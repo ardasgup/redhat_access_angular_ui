@@ -1,11 +1,11 @@
 doctype html
 div#redhat-access-case
-  div.container-fluid(ng-show='caseLoading && securityService.loginStatus.isLoggedIn')
+  div.container-fluid(ng-show='caseLoading && securityService.loginStatus.isLoggedIn && securityService.sfdcIsHealthy')
     div.row(style='margin-right: 0px;')
       div.col-xs-12
         span.rha-search-spinner
   div.container-fluid(
-    ng-hide='caseLoading',
+    ng-hide='caseLoading || !securityService.sfdcIsHealthy',
     rha-resizable,
     rha-dom-ready='domReady',
     style='overflow: auto; padding-left: 15px;border-top: 1px solid #dddddd; border-left: 1px solid #dddddd;')
