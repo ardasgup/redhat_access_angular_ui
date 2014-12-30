@@ -386,6 +386,13 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     }, angular.bind(deferred, errorHandler));
                     return deferred.promise;
                 },
+                search: function (searchQuery) {
+                    var deferred = $q.defer();
+                    strata.cases.search(function (response) {
+                        deferred.resolve(response);
+                    }, angular.bind(deferred, errorHandler),searchQuery);
+                    return deferred.promise;
+                },
                 attachments: {
                     list: function (id) {
                         var deferred = $q.defer();

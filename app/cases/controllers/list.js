@@ -81,6 +81,36 @@ angular.module('RedhatAccess.cases').controller('List', [
             }
         };
 
+        SearchBoxService.doSOLRSearch = function () {
+            SearchCaseService.clearPagination();
+            if($scope.tableParams !== undefined){
+                SearchCaseService.caseListPage = 1;
+                SearchCaseService.caseListPageSize = 10;
+                $scope.tableParams.$params.page = SearchCaseService.caseListPage;
+                $scope.tableParams.$params.count = SearchCaseService.caseListPageSize;
+            }
+            if(CaseService.groups.length === 0){
+                CaseService.populateGroups().then(function (){
+                    SearchCaseService.searchCases().then(function () {
+                        if (!tableBuilt) {
+                            buildTable();
+                        } else {
+                            $scope.tableParams.reload();
+                        }
+                    });
+                });
+            } else {
+                //CaseService.buildGroupOptions();
+                SearchCaseService.searchCases().then(function () {
+                    if (!tableBuilt) {
+                        buildTable();
+                    } else {
+                        $scope.tableParams.reload();
+                    }
+                });
+            }
+        };
+
         $scope.firePageLoadEvent = function () {
             if (window.chrometwo_require !== undefined) {
                 chrometwo_require(['analytics/attributes', 'analytics/main'], function(attrs, paf) {

@@ -180,5 +180,23 @@ angular.module('RedhatAccess.cases').service('SearchCaseService', [
             }
             return $q.all(promises);
         };
+
+        this.searchCases = function () {
+            this.searching = true;
+            var deferred = $q.defer();
+            strataService.cases.search(SearchBoxService.searchTerm).then(angular.bind(this, function (response) {
+                this.cases = response;
+                this.totalCases = this.cases.length;
+                this.total = this.cases.length;
+                this.allCasesDownloaded = true;
+                this.searching = false;
+                deferred.resolve(response);
+            }), angular.bind(this, function (error) {
+                AlertService.addStrataErrorMessage(error);
+                this.searching = false;
+                deferred.resolve();
+            }));
+            return deferred.promise;
+        };
     }
 ]);
