@@ -81,7 +81,7 @@ angular.module('RedhatAccess.cases').controller('List', [
             }
         };
 
-        SearchBoxService.doSOLRSearch = function () {
+        SearchBoxService.doCaseSearch = function () {
             SearchCaseService.clearPagination();
             if($scope.tableParams !== undefined){
                 SearchCaseService.caseListPage = 1;
@@ -89,26 +89,13 @@ angular.module('RedhatAccess.cases').controller('List', [
                 $scope.tableParams.$params.page = SearchCaseService.caseListPage;
                 $scope.tableParams.$params.count = SearchCaseService.caseListPageSize;
             }
-            if(CaseService.groups.length === 0){
-                CaseService.populateGroups().then(function (){
-                    SearchCaseService.searchCases().then(function () {
-                        if (!tableBuilt) {
-                            buildTable();
-                        } else {
-                            $scope.tableParams.reload();
-                        }
-                    });
-                });
-            } else {
-                //CaseService.buildGroupOptions();
-                SearchCaseService.searchCases().then(function () {
-                    if (!tableBuilt) {
-                        buildTable();
-                    } else {
-                        $scope.tableParams.reload();
-                    }
-                });
-            }
+            SearchCaseService.searchCases().then(function () {
+                if (!tableBuilt) {
+                    buildTable();
+                } else {
+                    $scope.tableParams.reload();
+                }
+            });
         };
 
         $scope.firePageLoadEvent = function () {

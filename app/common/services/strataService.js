@@ -386,11 +386,18 @@ angular.module('RedhatAccess.common').factory('strataService', [
                     }, angular.bind(deferred, errorHandler));
                     return deferred.promise;
                 },
-                search: function (searchQuery) {
+                search: function (searchQuery, isSolrSearch) {
                     var deferred = $q.defer();
-                    strata.cases.search(function (response) {
-                        deferred.resolve(response);
-                    }, angular.bind(deferred, errorHandler),searchQuery);
+                    if (!ie8 && strataCache.get('searchCaseResult' + searchQuery)) {
+                        deferred.resolve(strataCache.get('searchCaseResult' + searchQuery));
+                    } else {
+                        strata.cases.search(function (response) {
+                            if (!ie8) {
+                                strataCache.put('searchCaseResult' + searchQuery,response);
+                            }
+                            deferred.resolve(response);
+                        }, angular.bind(deferred, errorHandler),searchQuery,isSolrSearch);
+                    }
                     return deferred.promise;
                 },
                 attachments: {

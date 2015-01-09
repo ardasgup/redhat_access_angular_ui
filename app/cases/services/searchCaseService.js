@@ -183,8 +183,11 @@ angular.module('RedhatAccess.cases').service('SearchCaseService', [
 
         this.searchCases = function () {
             this.searching = true;
+            CaseService.group = '';
+            CaseService.status = STATUS.open;
             var deferred = $q.defer();
-            strataService.cases.search(SearchBoxService.searchTerm).then(angular.bind(this, function (response) {
+            var isSolrSearch = false;
+            strataService.cases.search(SearchBoxService.searchTerm , isSolrSearch).then(angular.bind(this, function (response) {
                 this.cases = response;
                 this.totalCases = this.cases.length;
                 this.total = this.cases.length;
