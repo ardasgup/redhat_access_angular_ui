@@ -21,12 +21,12 @@ progress.</p>
 				<legend><span class="number">1</span>Requestor</legend>
 	    			
 	    			<div class="control-group">
-	    				<label class="control-label" for="rha-requestor-email">Your Email Address *</label><input id="rha-requestor-email" ng-model='EscalationRequestService.emailAddress' class="nonEmpty" type="text" ng-change="mandatoryFieldCheck()">
+	    				<label class="control-label" for="rha-requestor-email">Your Email Address *</label><input id="rha-requestor-email" ng-model='EscalationRequestService.emailAddress' class="nonEmpty" type="text">
 						<span class="help-block">This should be the email address associated with your Red Hat Customer Portal or Partner Center login</span>
 							 
 	    			</div>
 	    			<div class="control-group">
-	    				<label class="control-label" for="rha-requestor-phone">Your Phone Number *</label><input id="rha-requestor-phone" ng-model='EscalationRequestService.phoneNumber' class="nonEmpty" type="text" ng-change="mandatoryFieldCheck()">
+	    				<label class="control-label" for="rha-requestor-phone">Your Phone Number *</label><input id="rha-requestor-phone" ng-model='EscalationRequestService.phoneNumber' class="nonEmpty" type="text">
 	    			</div>
 
 			</fieldset>
@@ -80,7 +80,7 @@ progress.</p>
 					</div>
 					<div class="clear"></div>
 	    			<div class="control-group">
-	    				<label class="control-label" for="rha-issue-description">Issue Description</label><textarea id="rha-issue-description" class="nonEmpty"></textarea>
+	    				<label class="control-label" for="rha-issue-description">Issue Description</label><textarea ng-model='EscalationRequestService.issueDescription' id="rha-issue-description" class="nonEmpty"></textarea>
 						<span class="help-block">Please provide as much detail as 
 						possible to help us understand the issue, for example:Reason for the 
 						escalation, the business context, the competitive situation, past 
@@ -96,7 +96,7 @@ progress.</p>
 
 		<div class="clear"></div>
 		<div class="column column-width7 column-offset1">
-			<input id="sendRequest" value="Send Request" class="btn btn-large" ng-click="submitEscalationRequest()" ng-disabled="disableSendRequest">
+			<input id="sendRequest" value="Send Request" class="btn btn-large" ng-click="submitEscalationRequest()">
 		</div>	
 	</div>
 </form>

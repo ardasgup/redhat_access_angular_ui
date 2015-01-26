@@ -74,12 +74,22 @@ angular.module('RedhatAccess.cases').service('EscalationRequestService', [
 	    this.urgency = '';
 
 	    this.sendEscalationRequest = function() {
-	    	// strataService.escalationRequest.create(escalationJSON).then(function () {
-            //     AlertService.clearAlerts();
-            //     AlertService.addSuccessMessage(translate('Your Partner Escalation request has been sent successfully'));                
-            // }, function (error) {
-            //     AlertService.addStrataErrorMessage(error);
-            // });
+	    	// var escalationJSON = {
+	    	// 	'record_type': 'partner Escalation',
+	    	// 	'issue_decription': this.issueDescription,
+	    	// 	'geo': this.geo.value,
+	    	// 	'account_number': this.accountNumber,
+	    	// 	'case_number': this.caseNumber,
+	    	// 	'already_escalated': this.alreadyEscalated,
+	    	// 	'subject': 'test'
+	    	// };
+	    	var escalationJSON = {'account_number': "540155",'case_number': "00531482",'geo': "LATAM",'subject': "test sales subject",'record_type': "Sales Escalation",'issue_description': "test description"};
+	    	strataService.escalationRequest.create(escalationJSON).then(function (escalationNum) {
+                AlertService.clearAlerts();
+                AlertService.addSuccessMessage(translate('Your Partner Escalation request has been sent successfully'));                
+            }, function (error) {
+                AlertService.addStrataErrorMessage(error);
+            });
 	    }
 
 	}
