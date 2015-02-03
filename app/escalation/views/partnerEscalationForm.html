@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<div id="redhat-access-escalations" class="container-offset">
+<div rha-header="" page="escalationView"/>
 <h1>Priority Customer Support Routing</h1>
 Red Hat Global Support Services (GSS) and Red Hat Global Partner Enablement have established 
 Partner Escalation to enable our strategic partners to escalate 
@@ -57,7 +60,7 @@ progress.</p>
 	    			<div class="control-group">
 	    				<label class="control-label" for="rha-geo">Customer GEO</label>
 	    				<select id="rha-geo" class="productSelect nonEmpty" size="1"
-	    					ng-options='geo.value for geo in geoList' ng-model="EscalationRequestService.geo">
+	    					ng-options='geo for geo in geoList' ng-model="EscalationRequestService.geo">
 						</select>
 						<span class="help-block">NA-North America, EMEA-Europe,the Middle East and Africa, LATAM-Latin America, APAC-Asia Pacific</span>
 	    			</div>
@@ -96,8 +99,9 @@ progress.</p>
 
 		<div class="clear"></div>
 		<div class="column column-width7 column-offset1">
-			<input id="sendRequest" value="Send Request" class="btn btn-large" ng-click="submitEscalationRequest()">
+			<input id="sendRequest" value="Send Request" class="btn btn-primary" ng-click="submitEscalationRequest()">
 		</div>	
 	</div>
 </form>
+</div>
 						
