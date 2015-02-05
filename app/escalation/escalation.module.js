@@ -19,4 +19,7 @@ angular.module('RedhatAccess.escalation', [
             templateUrl: 'escalation/views/partnerEscalationForm.html'
         });
     }
-]);
+]).constant('ESCALATION_TYPE', {
+    partner: 'Partner Escalation',
+    sales: 'Sales Escalation'
+});

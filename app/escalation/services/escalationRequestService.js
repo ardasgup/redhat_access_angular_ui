@@ -4,97 +4,91 @@ angular.module('RedhatAccess.cases').service('EscalationRequestService', [
     'strataService',
     'AlertService',
     'RHAUtils',
+    'ESCALATION_TYPE',
     'securityService',
-    '$q',
-    function (strataService, AlertService, RHAUtils, securityService, $q) {
-
-	    this.accountId = '';
+    'translate',
+    function (strataService, AlertService, RHAUtils, ESCALATION_TYPE, securityService, translate) {
+	    
 	    this.accountNumber = '';
-	    this.alreadyEscalated = false;
-	    this.associateName = '';
-	    this.billed = false;
-	    this.bookingAmount = '';
-	    this.bookingDate = '';
-	    this.caseId = '';
 	    this.caseNumber = '';
-	    this.caseOwnerEmail = '';
-	    this.comments = {};
-	    this.compliance = false;
-	    this.complianceType = 
-	    this.consulting = false;
-	    this.contactName = '';
-	    this.contactNameForSharing = '';
-	    this.createdBy = '';
-	    this.createdDate = '';
-	    this.customerDetails = '';
-	    this.customerEmail = '';
-	    this.customerName = '';
-	    this.customerPhone = '';
-	    this.customerType = '';
-	    this.escalatedToName = '';
-	    this.escalateToName = '';
-	    this.escalateToSSOName = '';
-	    this.escalationName = '';
-	    this.escalationsByGeo = 
-	    this.expectations = '';
-	    this.fts = false;
-	    this.geo = '';
-	    this.id = '';
-	    this.involvedEmail = '';
-	    this.issueDescription = '';
-	    this.lastModifiedBy = '';
-	    this.lastModifiedDate = '';
-	    this.message = '';
-	    this.name = '';
-	    this.owner = '';
-	    this.privateCommentCount = '';
-	    this.hasProducts = false;
-	    this.productType = '';
-	    this.publicCommentCount = '';
-	    this.recordType = '';
-	    this.redHatLogin = '';
-	    this.requestor = '';
+	    this.alreadyEscalated = false;
 	    this.requestorEmail = '';
 	    this.requestorPhone = '';
-	    this.returnCode = '';
-	    this.routingType = '';
-	    this.sbt = '';
-	    this.severity = '';
-	    this.status = '';
-	    this.strategic = '';
-	    this.subject = '';
-	    this.survey = '';
-	    this.targetDate = '';
-	    this.team = '';
-	    this.text = '';
-	    this.toWhom = '';
-	    this.training = false;
-	    this.type = '';
-	    this.typeOfRequest = '';
-	    this.urgency = '';
+	    this.customerName = '';
+	    this.customerEmail = '';
+	    this.customerPhone = '';
+	    this.geo = '';
+	    this.expectations = '';
+	    this.issueDescription = '';
+
+	    this.clearEscalationFields = function() {
+	    	this.accountNumber = '';
+		    this.caseNumber = '';
+		    this.alreadyEscalated = false;
+		    this.requestorEmail = '';
+		    this.requestorPhone = '';
+		    this.customerName = '';
+		    this.customerEmail = '';
+		    this.customerPhone = '';
+		    this.geo = '';
+		    this.expectations = '';
+		    this.issueDescription = '';
+	    };
 
 	    this.sendEscalationRequest = function() {
-	    	// var escalationJSON = {
-	    	// 	'record_type': 'partner Escalation',
-	    	// 	'issue_decription': this.issueDescription,
-	    	// 	'geo': this.geo.value,
-	    	// 	'account_number': this.accountNumber,
-	    	// 	'case_number': this.caseNumber,
-	    	// 	'already_escalated': this.alreadyEscalated,
-	    	// 	'subject': 'test'
-	    	// };
-	    	var escalationJSON = {'account_number': "540155",'case_number': "00531482",'geo': "LATAM",'subject': "test sales subject",'record_type': "Sales Escalation",'issue_description': "test description"};
+	    	var escalationJSON = {
+	    		'record_type': ESCALATION_TYPE.partner
+	    	};
+	    	var isObjectNothing = function (object) {
+                if (object === '' || object === undefined || object === null) {
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            if (!isObjectNothing(this.accountNumber)) {
+                escalationJSON.account_number = this.accountNumber;
+            }
+            if (!isObjectNothing(this.caseNumber)) {
+                escalationJSON.case_number = this.caseNumber;
+            }
+            if (!isObjectNothing(this.customerName)) {
+                escalationJSON.customer_name = this.customerName;
+            }
+            if (!isObjectNothing(this.customerEmail)) {
+                escalationJSON.customer_email = this.customerEmail;
+            }
+            if (!isObjectNothing(this.customerPhone)) {
+                escalationJSON.customer_phone = this.customerPhone;
+            }
+            if (!isObjectNothing(this.requestorEmail)) {
+                escalationJSON.requestor_email = this.requestorEmail;
+            }
+            if (!isObjectNothing(this.requestorPhone)) {
+                escalationJSON.requestor_phone = this.requestorPhone;
+            }
+            if (!isObjectNothing(this.issueDescription)) {
+                escalationJSON.issue_decription = this.issueDescription;
+            }
+            if (!isObjectNothing(this.alreadyEscalated)) {
+                escalationJSON.already_escalated = this.alreadyEscalated;
+            }
+            if (!isObjectNothing(this.geo)) {
+                escalationJSON.geo = this.geo;
+            }
+            if (!isObjectNothing(this.expectations)) {
+                escalationJSON.expectations = this.expectations;
+            }
+
 	    	strataService.escalationRequest.create(escalationJSON).then(function (escalationNum) {
                 AlertService.clearAlerts();
-                AlertService.addSuccessMessage(translate('Your Partner Escalation request has been sent successfully'));                
+                if (escalationNum !== undefined) {
+                	AlertService.addSuccessMessage(translate('Your Partner Escalation request has been sent successfully'));
+                	this.clearEscalationFields();
+                }                
             }, function (error) {
                 AlertService.addStrataErrorMessage(error);
             });
-	    }
-
+	    };
 	}
 ]);
-
-
-
-    
