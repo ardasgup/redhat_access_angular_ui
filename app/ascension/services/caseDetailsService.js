@@ -264,6 +264,9 @@ angular.module('RedhatAccess.ascension').service('CaseDetailsService', [
                     var secureHandlingUQL = UQL.cond('requiresSecureHandling', 'is', false);
                     finalUql = UQL.and(finalUql, secureHandlingUQL);
 
+                    var notLockedCaseUQL = UQL.cond('hasExternalLock', 'is', false);
+                    finalUql = UQL.and(finalUql, notLockedCaseUQL);
+
                     var promise = udsService.cases.list(finalUql,'Minimal',this.yourCasesLimit, undefined, true);
                     promise.then(angular.bind(this, function (topCases) {
                         if(RHAUtils.isNotEmpty(topCases)) {
